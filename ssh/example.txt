@@ -1,0 +1,178 @@
+Python 3.11.0 (main, Oct 24 2022, 18:26:48) [MSC v.1933 64 bit (AMD64)] on win32
+Type "help", "copyright", "credits" or "license()" for more information.
+
+
+import paramiko
+
+
+client = paramiko.SSHClient()
+
+client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+client.connect(hostname="192.168.100.1", username="admin", password="sxdc.1029!", look_for_keys=False, allow_agent=False)
+Traceback (most recent call last):
+  File "C:\Program Files\Python311\Lib\paramiko\client.py", line 358, in connect
+    retry_on_signal(lambda: sock.connect(addr))
+  File "C:\Program Files\Python311\Lib\paramiko\util.py", line 279, in retry_on_signal
+    return function()
+  File "C:\Program Files\Python311\Lib\paramiko\client.py", line 358, in <lambda>
+    retry_on_signal(lambda: sock.connect(addr))
+TimeoutError: [WinError 10060] Попытка установить соединение была безуспешной, т.к. от другого компьютера за требуемое время не получен нужный отклик, или было разорвано уже установленное соединение из-за неверного отклика уже подключенного компьютера
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "<pyshell#8>", line 1, in <module>
+    client.connect(hostname="192.168.100.1", username="admin", password="sxdc.1029!", look_for_keys=False, allow_agent=False)
+  File "C:\Program Files\Python311\Lib\paramiko\client.py", line 365, in connect
+    sock.close()
+  File "C:\Program Files\Python311\Lib\socket.py", line 498, in close
+    def close(self):
+KeyboardInterrupt
+
+
+
+
+
+
+
+client.connect(hostname="172.25.1.185", username="admin", password="sxdc.1029!", look_for_keys=False, allow_agent=False)
+
+
+client.connect(hostname="172.25.1.185", username="admin", password="sxdc.1029!", look_for_keys=False, allow_agent=False)
+
+
+ssh.send("sh ip int br\n")
+Traceback (most recent call last):
+  File "<pyshell#17>", line 1, in <module>
+    ssh.send("sh ip int br\n")
+NameError: name 'ssh' is not defined
+import paramiko
+import time
+import socket
+from pprint import pprint
+SyntaxError: multiple statements found while compiling a single statement
+
+
+
+import paramiko
+import time
+import socket
+from pprint import pprint
+SyntaxError: multiple statements found while compiling a single statement
+import time
+
+
+import socket
+from pprint import pprint
+SyntaxError: multiple statements found while compiling a single statement
+import socket
+from pprint import pprint
+
+ssh = client.invoke_shell()
+Traceback (most recent call last):
+  File "<pyshell#30>", line 1, in <module>
+    ssh = client.invoke_shell()
+  File "C:\Program Files\Python311\Lib\paramiko\client.py", line 562, in invoke_shell
+    chan = self._transport.open_session()
+  File "C:\Program Files\Python311\Lib\paramiko\transport.py", line 920, in open_session
+    return self.open_channel(
+  File "C:\Program Files\Python311\Lib\paramiko\transport.py", line 1014, in open_channel
+    raise SSHException("SSH session not active")
+paramiko.ssh_exception.SSHException: SSH session not active
+client.connect(hostname="172.25.1.185", username="admin", password="sxdc.1029!", look_for_keys=False, allow_agent=False)
+ssh = client.invoke_shell()
+ssh.send("sh ip int br\n")
+13
+ssh.recv(3000)
+b'\r\n\r\n\r\nc93-hgkm-1500#sh ip int br\r\nInterface              IP-Address      OK? Method Status                Protocol\r\nVlan1                  unassigned      YES NVRAM  administratively down down    \r\nVlan18                 10.57.18.1      YES NVRAM  up                    up      \r\nVlan26                 10.57.26.1      YES NVRAM  up                    up      \r\nVlan27                 10.57.27.1      YES NVRAM  up                    up      \r\nVlan28                 10.57.28.1      YES NVRAM  up                    up      \r\nVlan29                 10.57.29.1      YES NVRAM  up                    up      \r\nVlan30                 10.57.30.1      YES NVRAM  up                    up      \r\nVlan31                 10.57.31.1      YES NVRAM  up                    up      \r\nVlan34                 10.57.34.1      YES NVRAM  up                    up      \r\nVlan35                 10.57.35.1      YES NVRAM  up                    up      \r\nVlan37                 10.57.37.1      YES NVRAM  up                    up      \r\nVlan38                 10.57.38.1      YES NVRAM  up                    up      \r\nVlan39                 10.57.39.1      YES NVRAM  up                    up      \r\nVlan98                 10.57.98.1      YES NVRAM  up                    up      \r\nVlan99                 10.57.99.1      YES NVRAM  up                    up      \r\nVlan900                10.10.99.1      YES NVRAM  up                    up      \r\nGigabitEthernet0/0     unassigned      YES NVRAM  down                  down    \r\nGigabitEthernet1/0/1   172.17.1.38     YES NVRAM  up                    up      \r\nGigabitEthernet1/0/2   unassigned      YES unset  down                  down    \r\nGigabitEthernet1/0/3   unassigned      YES unset  down                  down    \r\nGigabitEthernet1/0/4   unassigned      YES unset  down                  down    \r\n --More-- '
+
+
+
+
+
+
+
+
+ssh.send("sh cdp neib detail\n")
+19
+ssh.recv(3000)
+b"\x08\x08\x08\x08\x08\x08\x08\x08\x08        \x08\x08\x08\x08\x08\x08\x08\x08\x08\r\nc93-hgkm-1500#h cdp neib detail\r\nhelp cdp neib detail\r\n     ^\r\n% Invalid input detected at '^' marker.\r\n\r\nc93-hgkm-1500#"
+
+
+
+ssh.send("sh cdp neig detail\n")
+19
+ssh.recv(3000)
+b'sh cdp neig detail\r\n-------------------------\r\nDevice ID: VZIS-1500 \\ geodeziya\r\nEntry address(es): \r\n  IP address: 10.57.98.22\r\nPlatform: NanoStation M5,  Capabilities: Trans-Bridge \r\nInterface: GigabitEthernet1/0/7,  Port ID (outgoing port): br1\r\nHoldtime : 108 sec\r\n\r\nVersion :\r\nXW.v6.1.7\r\n\r\nadvertisement version: 1\r\n --More-- '
+ssh.send("terminal length 0\n")
+18
+ssh.send("sh cdp neig detail\n")
+19
+ssh.recv(3000)
+b"\x08\x08\x08\x08\x08\x08\x08\x08\x08        \x08\x08\x08\x08\x08\x08\x08\x08\x08\r\nc93-hgkm-1500#erminal length 0\r\n                ^\r\n% Invalid input detected at '^' marker.\r\n\r\nc93-hgkm-1500#sh cdp neig detail\r\n-------------------------\r\nDevice ID: VZIS-1500 \\ geodeziya\r\nEntry address(es): \r\n  IP address: 10.57.98.22\r\nPlatform: NanoStation M5,  Capabilities: Trans-Bridge \r\nInterface: GigabitEthernet1/0/7,  Port ID (outgoing port): br1\r\nHoldtime : 119 sec\r\n\r\nVersion :\r\nXW.v6.1.7\r\n\r\nadvertisement version: 1\r\n\r\n-------------------------\r\nDevice ID: HRS-vzis1500-sug-gw-213-1\r\nEntry address(es): \r\n  IP address: 10.57.36.25\r\nPlatform: MikroTik,  Capabilities: Router \r\nInterface: GigabitEthernet1/0/24,  Port ID (outgoing port): vlan36data\r\nHoldtime : 74 sec\r\n\r\nVersion :\r\n6.48.4 (stable)\r\n --More-- "
+ssh.send("terminal length 0\n")
+18
+ssh.recv(3000)
+b"\x08\x08\x08\x08\x08\x08\x08\x08\x08        \x08\x08\x08\x08\x08\x08\x08\x08\x08\r\nc93-hgkm-1500#erminal length 0\r\n                ^\r\n% Invalid input detected at '^' marker.\r\n\r\nc93-hgkm-1500#"
+ssh.send("  terminal length 0\n")
+20
+ssh.recv(3000)
+b'  terminal length 0\r\nc93-hgkm-1500#'
+ssh.send("sh cdp neig detail\n")
+19
+ssh.recv(3000)
+  
+b'sh cdp neig detail\r\n'
+
+ssh.recv(3000)
+  
+b"-------------------------\r\nDevice ID: VZIS-1500 \\ geodeziya\r\nEntry address(es): \r\n  IP address: 10.57.98.22\r\nPlatform: NanoStation M5,  Capabilities: Trans-Bridge \r\nInterface: GigabitEthernet1/0/7,  Port ID (outgoing port): br1\r\nHoldtime : 104 sec\r\n\r\nVersion :\r\nXW.v6.1.7\r\n\r\nadvertisement version: 1\r\n\r\n-------------------------\r\nDevice ID: HRS-vzis1500-sug-gw-213-1\r\nEntry address(es): \r\n  IP address: 10.57.36.25\r\nPlatform: MikroTik,  Capabilities: Router \r\nInterface: GigabitEthernet1/0/24,  Port ID (outgoing port): vlan36data\r\nHoldtime : 119 sec\r\n\r\nVersion :\r\n6.48.4 (stable)\r\n\r\nadvertisement version: 1\r\n\r\n-------------------------\r\nDevice ID: sw2960_Stelaj.GSPROM.local\r\nEntry address(es): \r\n  IP address: 10.57.99.9\r\nPlatform: cisco WS-C2960C-12PC-L,  Capabilities: Switch IGMP \r\nInterface: GigabitEthernet1/0/8,  Port ID (outgoing port): GigabitEthernet0/2\r\nHoldtime : 134 sec\r\n\r\nVersion :\r\nCisco IOS Software, C2960C Software (C2960c405-UNIVERSALK9-M), Version 15.2(2)E6, RELEASE SOFTWARE (fc1)\r\nTechnical Support: http://www.cisco.com/techsupport\r\nCopyright (c) 1986-2016 by Cisco Systems, Inc.\r\nCompiled Sat 17-Dec-16 00:36 by prod_rel_team\r\n\r\nadvertisement version: 2\r\nProtocol Hello:  OUI=0x00000C, Protocol ID=0x0112; payload len=27, value=00000000FFFFFFFF010221FF000000000000CC5A5388D780FF0000\r\nVTP Management Domain: ''\r\nNative VLAN: 1\r\nDuplex: full\r\nManagement address(es): \r\n  IP address: 10.57.99.9\r\n\r\n-------------------------\r\nDevice ID: c920_Hostel4,3_Vz1500.gsprom.local\r\nEntry address(es): \r\n  IP address: 10.57.99.36\r\nPlatform: cisco C9200L-24P-4G,  Capabilities: Switch IGMP \r\nInterface: GigabitEthernet1/0/8,  Port ID (outgoing port): GigabitEthernet1/0/24\r\nHoldtime : 151 sec\r\n\r\nVersion :\r\nCisco IOS Software [Fuji], Catalyst L3 Switch Software (CAT9K_LITE_IOSXE), Version 16.9.3, RELEASE SOFTWARE (fc2)\r\nTechnical Support: http://www.cisco.com/techsupport\r\nCopyright (c) 1986-2019 by Cisco Systems, Inc.\r\nCompiled Wed 20-Mar-19 07:28 by mcpre\r\n\r\nadvertisement version: 2\r\nVTP Management Domain: ''\r\nNative VLAN: 1\r\nDuplex: full\r\nManagement address(es): \r\n  IP address: 10.57.99.36\r\n\r\n-------------------------\r\nDevice ID: c43-hgkm-1500.gsprom.local\r\nEntry address(es): \r\n  IP address: 172.17.1.37\r\nPlatform: cisco ISR4331/K9,  Capabilities: Router Switch IGMP \r\nInterface: GigabitEthernet1/0/1,  Port ID (outgoing port): GigabitEthernet0/0/1\r\nHoldtime : 150 sec\r\n\r\nVersion :\r\nCisco IOS Software [Fuji], ISR Software (X86_64_LINUX_IOSD-UNIVERSALK9-M), Version 16.9.3, RELEASE SOFTWARE (fc2)\r\nTechnical Support: http://www.cisco.com/techsupport\r\nCopyright (c) 1986-2019 by Cisco Systems, Inc.\r\nCompiled Wed 20-Mar-19 08:02 by mcpre\r\n\r\nadvertisement version: 2\r\nVTP Management Domain: ''\r\nDuplex: full\r\nManagement address(es): \r\n  IP address: 172.17.1.37\r\n\r\n-------------------------\r\nDevice ID: c43-hgkm-1500.gsprom.local\r\nEntry address(es): \r\n  IP address: 10.57.32.1\r\nPlatform: cisco ISR4331/K9,  Capabilities: Router Switch IGMP \r\nInterface: GigabitEthernet2/0/1,  Port"
+
+
+
+ssh.recv(3000)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ssh.recv(3000)
+b" ID (outgoing port): GigabitEthernet0/0/0\r\nHoldtime : 150 sec\r\n\r\nVersion :\r\nCisco IOS Software [Fuji], ISR Software (X86_64_LINUX_IOSD-UNIVERSALK9-M), Version 16.9.3, RELEASE SOFTWARE (fc2)\r\nTechnical Support: http://www.cisco.com/techsupport\r\nCopyright (c) 1986-2019 by Cisco Systems, Inc.\r\nCompiled Wed 20-Mar-19 08:02 by mcpre\r\n\r\nadvertisement version: 2\r\nVTP Management Domain: ''\r\nDuplex: full\r\nManagement address(es): \r\n  IP address: 10.57.32.1\r\n\r\n-------------------------\r\nDevice ID: c9200_Obhezhitie_4.1.gsprom.local\r\nEntry address(es): \r\n  IP address: 10.57.99.13\r\nPlatform: cisco C9200L-24P-4G,  Capabilities: Switch IGMP \r\nInterface: GigabitEthernet1/0/7,  Port ID (outgoing port): GigabitEthernet1/0/24\r\nHoldtime : 170 sec\r\n\r\nVersion :\r\nCisco IOS Software [Fuji], Catalyst L3 Switch Software (CAT9K_LITE_IOSXE), Version 16.9.3, RELEASE SOFTWARE (fc2)\r\nTechnical Support: http://www.cisco.com/techsupport\r\nCopyright (c) 1986-2019 by Cisco Systems, Inc.\r\nCompiled Wed 20-Mar-19 07:28 by mcpre\r\n\r\nadvertisement version: 2\r\nVTP Management Domain: ''\r\nNative VLAN: 1\r\nDuplex: full\r\nManagement address(es): \r\n  IP address: 10.57.99.13\r\n\r\n-------------------------\r\nDevice ID: AP_OMC_GSP-Stol\r\nEntry address(es): \r\n  IP address: 10.57.98.23\r\nPlatform: NanoStation M5,  Capabilities: Trans-Bridge \r\nInterface: GigabitEthernet1/0/24,  Port ID (outgoing port): br4\r\nHoldtime : 115 sec\r\n\r\nVersion :\r\nXW.v6.1.3\r\n\r\nadvertisement version: 1\r\n\r\n-------------------------\r\nDevice ID: T2 Prism1\r\nEntry address(es): \r\n  IP address: 10.57.98.46\r\nPlatform: Rocket Prism 5AC Gen2,  Capabilities: Trans-Bridge \r\nInterface: GigabitEthernet1/0/7,  Port ID (outgoing port): br1\r\nHoldtime : 101 sec\r\n\r\nVersion :\r\nXC.qca955x.v8.5.10.39345.181113.1632\r\n\r\nadvertisement version: 1\r\n\r\n-------------------------\r\nDevice ID: c2960-geodes.gsprom.local\r\nEntry address(es): \r\n  IP address: 10.57.99.28\r\nPlatform: cisco WS-C2960CX-8PC-L,  Capabilities: Switch IGMP \r\nInterface: GigabitEthernet1/0/7,  Port ID (outgoing port): GigabitEthernet0/10\r\nHoldtime : 159 sec\r\n\r\nVersion :\r\nCisco IOS Software, C2960CX Software (C2960CX-UNIVERSALK9-M), Version 15.2(7)E, RELEASE SOFTWARE (fc3)\r\nTechnical Support: http://www.cisco.com/techsupport\r\nCopyright (c) 1986-2019 by Cisco Systems, Inc.\r\nCompiled Sat 23-Mar-19 09:05 by prod_rel_team\r\n\r\nadvertisement version: 2\r\nVTP Management Domain: ''\r\nNative VLAN: 1\r\nDuplex: full\r\nManagement address(es): \r\n  IP address: 10.57.99.28\r\n\r\n-------------------------\r\nDevice ID: T2 Rocket Prism2\r\nEntry address(es): \r\n  IP address: 10.57.98.47\r\n  IPv6 address: FE80::E263:DAFF:FE60:55AA  (link-local)\r\nPlatform: Rocket Prism 5AC Gen2,  Capabilities: Trans-Bridge \r\nInterface: GigabitEthernet1/0/8,  Port ID (outgoing port): br1\r\nHoldtime : 119 sec\r\n\r\nVersion :\r\nXC.qca955x.v8.5.10.39345.181113.1632\r\n\r\nadvertisement version: 1\r\n\r\n-------------------------\r\nDevice ID: C9200-KPP-Video.gsprom.local\r\nEntry address(es): \r\n  IP address: 10.57.99.53\r\nPlatform: cisco C9200L-24P-4G,  Capabilities: "
+
+
+ssh.recv(3000)
+b"Switch IGMP \r\nInterface: GigabitEthernet1/1/2,  Port ID (outgoing port): GigabitEthernet1/1/4\r\nHoldtime : 125 sec\r\n\r\nVersion :\r\nCisco IOS Software [Fuji], Catalyst L3 Switch Software (CAT9K_LITE_IOSXE), Version 16.9.3, RELEASE SOFTWARE (fc2)\r\nTechnical Support: http://www.cisco.com/techsupport\r\nCopyright (c) 1986-2019 by Cisco Systems, Inc.\r\nCompiled Wed 20-Mar-19 07:28 by mcpre\r\n\r\nadvertisement version: 2\r\nVTP Management Domain: ''\r\nNative VLAN: 1\r\nDuplex: full\r\nManagement address(es): \r\n  IP address: 10.57.99.53\r\n\r\n-------------------------\r\nDevice ID: T21P_E2001565E0A724\r\nEntry address(es): \r\n  IP address: 10.57.36.219\r\nPlatform: T21P_E2,  Capabilities: Host Phone \r\nInterface: GigabitEthernet1/0/8,  Port ID (outgoing port): WAN PORT\r\nHoldtime : 141 sec\r\nSecond Port Status: Up\r\n\r\nVersion :\r\n52.82.0.20\r\n\r\nadvertisement version: 2\r\nDuplex: full\r\nPower drawn: 6.500 Watts\r\n\r\n-------------------------\r\nDevice ID: GSM \\ Stelag\r\nEntry address(es): \r\n  IP address: 10.57.98.18\r\nPlatform: AirGrid M5 HP,  Capabilities: Trans-Bridge \r\nInterface: GigabitEthernet1/0/8,  Port ID (outgoing port): br1\r\nHoldtime : 77 sec\r\n\r\nVersion :\r\nXM.v6.0\r\n\r\nadvertisement version: 1\r\n\r\n-------------------------\r\nDevice ID: VZIS_1500_T2_AP\r\nEntry address(es): \r\n  IP address: 10.57.98.49\r\nPlatform: PowerBeam M5 400,  Capabilities: Trans-Bridge \r\nInterface: GigabitEthernet1/0/13,  Port ID (outgoing port): br1\r\nHoldtime : 65 sec\r\n\r\nVersion :\r\nXW.v6.3.2\r\n\r\nadvertisement version: 1\r\n\r\n-------------------------\r\nDevice ID: c9200_Hostel_4.4_VZ15.gsprom.local\r\nEntry address(es): \r\n  IP address: 10.57.99.37\r\nPlatform: cisco C9200L-24P-4G,  Capabilities: Switch IGMP \r\nInterface: GigabitEthernet1/0/8,  Port ID (outgoing port): GigabitEthernet1/0/24\r\nHoldtime : 147 sec\r\n\r\nVersion :\r\nCisco IOS Software [Fuji], Catalyst L3 Switch Software (CAT9K_LITE_IOSXE), Version 16.9.3, RELEASE SOFTWARE (fc2)\r\nTechnical Support: http://www.cisco.com/techsupport\r\nCopyright (c) 1986-2019 by Cisco Systems, Inc.\r\nCompiled Wed 20-Mar-19 07:28 by mcpre\r\n\r\nadvertisement version: 2\r\nVTP Management Domain: ''\r\nNative VLAN: 1\r\nDuplex: full\r\nManagement address(es): \r\n  IP address: 10.57.99.37\r\n\r\n-------------------------\r\nDevice ID: PB_5K-1500_ST\r\nEntry address(es): \r\n  IP address: 10.57.98.43\r\nPlatform: PowerBeam 5AC 500,  Capabilities: Trans-Bridge \r\nInterface: GigabitEthernet2/0/2,  Port ID (outgoing port): br1\r\nHoldtime : 119 sec\r\n\r\nVersion :\r\nXC.qca955x.v8.0.2.33352.170327.1907\r\n\r\nadvertisement version: 1\r\n\r\n-------------------------\r\nDevice ID: T2_PRISM2->GSM_ST\r\nEntry address(es): \r\n  IP address: 10.57.98.16\r\nPlatform: PowerBeam 5AC 500,  Capabilities: Trans-Bridge \r\nInterface: GigabitEthernet1/0/8,  Port ID (outgoing port): br1\r\nHoldtime : 82 sec\r\n\r\nVersion :\r\nXC.qca955x.v8.0.2.33352.170327.1907\r\n\r\nadvertisement version: 1\r\n\r\n-------------------------\r\nDevice ID: VZIS-1500 \\ Prombaza_SMU\r\nEntry address(es): \r\n  IP address: 10.57.98.15\r\nPlatform: NanoStation M5,  Capabilities: Trans-Bridge \r\nInterface: Gig"
+ssh.recv(3000)
+b"abitEthernet1/0/7,  Port ID (outgoing port): br1\r\nHoldtime : 88 sec\r\n\r\nVersion :\r\nXW.v6.1.7\r\n\r\nadvertisement version: 1\r\n\r\n-------------------------\r\nDevice ID: T2_Prism2-GSP4_OSH_ST\r\nEntry address(es): \r\n  IP address: 10.57.98.36\r\nPlatform: NanoStation M5,  Capabilities: Trans-Bridge \r\nInterface: GigabitEthernet1/0/8,  Port ID (outgoing port): br1\r\nHoldtime : 69 sec\r\n\r\nVersion :\r\nXW.v6.3.6\r\n\r\nadvertisement version: 1\r\n\r\n-------------------------\r\nDevice ID: c2960-shtab-prorab-sw-1.gsprom.local\r\nEntry address(es): \r\n  IP address: 10.57.99.8\r\nPlatform: cisco WS-C2960C-12PC-L,  Capabilities: Switch IGMP \r\nInterface: GigabitEthernet1/0/7,  Port ID (outgoing port): GigabitEthernet0/1\r\nHoldtime : 170 sec\r\n\r\nVersion :\r\nCisco IOS Software, C2960C Software (C2960c405-UNIVERSALK9-M), Version 15.2(2)E6, RELEASE SOFTWARE (fc1)\r\nTechnical Support: http://www.cisco.com/techsupport\r\nCopyright (c) 1986-2016 by Cisco Systems, Inc.\r\nCompiled Sat 17-Dec-16 00:36 by prod_rel_team\r\n\r\nadvertisement version: 2\r\nProtocol Hello:  OUI=0x00000C, Protocol ID=0x0112; payload len=27, value=00000000FFFFFFFF010221FF000000000000706BB9A13480FF0000\r\nVTP Management Domain: ''\r\nNative VLAN: 1\r\nDuplex: full\r\nManagement address(es): \r\n  IP address: 10.57.99.8\r\n\r\n-------------------------\r\nDevice ID: c9200_Hostel_4.2_Vz1.gsprom.local\r\nEntry address(es): \r\n  IP address: 10.57.99.35\r\nPlatform: cisco C9200L-24P-4G,  Capabilities: Switch IGMP \r\nInterface: GigabitEthernet1/0/7,  Port ID (outgoing port): GigabitEthernet1/0/24\r\nHoldtime : 163 sec\r\n\r\nVersion :\r\nCisco IOS Software [Fuji], Catalyst L3 Switch Software (CAT9K_LITE_IOSXE), Version 16.9.3, RELEASE SOFTWARE (fc2)\r\nTechnical Support: http://www.cisco.com/techsupport\r\nCopyright (c) 1986-2019 by Cisco Systems, Inc.\r\nCompiled Wed 20-Mar-19 07:28 by mcpre\r\n\r\nadvertisement version: 2\r\nVTP Management Domain: ''\r\nNative VLAN: 1\r\nDuplex: full\r\nManagement address(es): \r\n  IP address: 10.57.99.35\r\n\r\n-------------------------\r\nDevice ID: C9200-ITR.gsprom.local\r\nEntry address(es): \r\n  IP address: 10.57.99.55\r\nPlatform: cisco C9200L-24P-4G,  Capabilities: Switch IGMP \r\nInterface: GigabitEthernet1/0/8,  Port ID (outgoing port): GigabitEthernet1/0/24\r\nHoldtime : 175 sec\r\n\r\nVersion :\r\nCisco IOS Software [Fuji], Catalyst L3 Switch Software (CAT9K_LITE_IOSXE), Version 16.9.3, RELEASE SOFTWARE (fc2)\r\nTechnical Support: http://www.cisco.com/techsupport\r\nCopyright (c) 1986-2019 by Cisco Systems, Inc.\r\nCompiled Wed 20-Mar-19 07:28 by mcpre\r\n\r\nadvertisement version: 2\r\nVTP Management Domain: ''\r\nNative VLAN: 1\r\nDuplex: full\r\nManagement address(es): \r\n  IP address: 10.57.99.55\r\n\r\n-------------------------\r\nDevice ID: c93-k632-core.gsprom.local\r\nEntry address(es): \r\n  IP address: 172.17.1.100\r\nPlatform: cisco C9300-24T,  Capabilities: Router Switch IGMP \r\nInterface: GigabitEthernet1/0/10,  Port ID (outgoing port): GigabitEthernet1/0/24\r\nHoldtime : 164 sec\r\n\r\nVersion :\r\nCisco IOS Software [Gibraltar], Catalyst L3 Switch Software (CAT9K_IOSXE), Version 16.12.0"
+ssh.recv(3000)
+b"2, RELEASE SOFTWARE (fc2)\r\nTechnical Support: http://www.cisco.com/techsupport\r\nCopyright (c) 1986-2019 by Cisco Systems, Inc.\r\nCompiled Tue 19-Nov-19 10:11 by mcpre\r\n\r\nadvertisement version: 2\r\nVTP Management Domain: ''\r\nNative VLAN: 1\r\nDuplex: full\r\nManagement address(es): \r\n  IP address: 172.17.1.100\r\n\r\n-------------------------\r\nDevice ID: NS_VZiS_Stol-GSP\r\nEntry address(es): \r\n  IP address: 10.57.98.24\r\nPlatform: NanoStation M5,  Capabilities: Trans-Bridge \r\nInterface: GigabitEthernet1/0/24,  Port ID (outgoing port): br4\r\nHoldtime : 98 sec\r\n\r\nVersion :\r\nXW.v6.1.4\r\n\r\nadvertisement version: 1\r\n\r\n-------------------------\r\nDevice ID: c2960-hgkm1500-sklad.gsprom.local\r\nEntry address(es): \r\n  IP address: 10.57.99.14\r\nPlatform: cisco WS-C2960C-8PC-L,  Capabilities: Switch IGMP \r\nInterface: GigabitEthernet1/0/8,  Port ID (outgoing port): GigabitEthernet0/1\r\nHoldtime : 148 sec\r\n\r\nVersion :\r\nCisco IOS Software, C2960C Software (C2960c405-UNIVERSALK9-M), Version 15.2(2)E8, RELEASE SOFTWARE (fc1)\r\nTechnical Support: http://www.cisco.com/techsupport\r\nCopyright (c) 1986-2018 by Cisco Systems, Inc.\r\nCompiled Mon 22-Jan-18 07:16 by prod_rel_team\r\n\r\nadvertisement version: 2\r\nProtocol Hello:  OUI=0x00000C, Protocol ID=0x0112; payload len=27, value=00000000FFFFFFFF010221FF0000000000002C01B5AFF200FF0000\r\nVTP Management Domain: ''\r\nNative VLAN: 1\r\nDuplex: full\r\nManagement address(es): \r\n  IP address: 10.57.99.14\r\n\r\n-------------------------\r\nDevice ID: T2_Prism2-Obsh_4.3_ST\r\nEntry address(es): \r\n  IP address: 10.57.98.41\r\n  IPv6 address: FE80::E263:DAFF:FED2:95FE  (link-local)\r\nPlatform: NanoBeam 5AC Gen2,  Capabilities: Trans-Bridge \r\nInterface: GigabitEthernet1/0/8,  Port ID (outgoing port): br1\r\nHoldtime : 91 sec\r\n\r\nVersion :\r\nWA.ar934x.v8.7.0.42152.200203.1256\r\n\r\nadvertisement version: 1\r\n\r\n-------------------------\r\nDevice ID: T2_Prism2-Obsh_4.4_ST\r\nEntry address(es): \r\n  IP address: 10.57.98.42\r\n  IPv6 address: FE80::76AC:B9FF:FE8A:CF6  (link-local)\r\nPlatform: NanoBeam 5AC Gen2,  Capabilities: Trans-Bridge \r\nInterface: GigabitEthernet1/0/8,  Port ID (outgoing port): br1\r\nHoldtime : 103 sec\r\n\r\nVersion :\r\nWA.ar934x.v8.7.0.42152.200203.1256\r\n\r\nadvertisement version: 1\r\n\r\n-------------------------\r\nDevice ID: c2960cx-Baza-GSM.gsprom.local\r\nEntry address(es): \r\n  IP address: 10.57.99.5\r\nPlatform: cisco WS-C2960CX-8PC-L,  Capabilities: Switch IGMP \r\nInterface: GigabitEthernet1/0/8,  Port ID (outgoing port): GigabitEthernet0/10\r\nHoldtime : 142 sec\r\n\r\nVersion :\r\nCisco IOS Software, C2960CX Software (C2960CX-UNIVERSALK9-M), Version 15.2(7)E, RELEASE SOFTWARE (fc3)\r\nTechnical Support: http://www.cisco.com/techsupport\r\nCopyright (c) 1986-2019 by Cisco Systems, Inc.\r\nCompiled Sat 23-Mar-19 09:05 by prod_rel_team\r\n\r\nadvertisement version: 2\r\nVTP Management Domain: ''\r\nNative VLAN: 1\r\nDuplex: full\r\nManagement address(es): \r\n  IP address: 10.57.99.5\r\n\r\n-------------------------\r\nDevice ID: Vzis1500_AP_GDN\r\nEntry address(es): \r\n  IP address: 10.57.26.201\r\nPlatform: NanoS"
+ssh.recv(3000)
+b'tation loco M2,  Capabilities: Trans-Bridge \r\nInterface: GigabitEthernet1/0/9,  Port ID (outgoing port): br0\r\nHoldtime : 107 sec\r\n\r\nVersion :\r\nXW.v6.2.0\r\n\r\nadvertisement version: 1\r\n\r\n-------------------------\r\nDevice ID: Vzis1500_ST_GDN\r\nEntry address(es): \r\n  IP address: 10.57.26.202\r\nPlatform: NanoStation M2,  Capabilities: Trans-Bridge \r\nInterface: GigabitEthernet1/0/9,  Port ID (outgoing port): br0\r\nHoldtime : 118 sec\r\n\r\nVersion :\r\nXW.v6.2.0\r\n\r\nadvertisement version: 1\r\n\r\n-------------------------\r\nDevice ID: 1500-632-Slave\r\nEntry address(es): \r\n  IP address: 172.17.10.50\r\nPlatform: airFiber 5U,  Capabilities: CVTA phone port \r\nInterface: GigabitEthernet1/0/10,  Port ID (outgoing port): br1\r\nHoldtime : 100 sec\r\n\r\nVersion :\r\nAF02.am1808.v4.1.0.250.200318.1135\r\n\r\nadvertisement version: 1\r\n\r\n\r\nTotal cdp entries displayed : 32\r\nc93-hgkm-1500#'

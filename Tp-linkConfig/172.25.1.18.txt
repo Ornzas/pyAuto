@@ -1,0 +1,265 @@
+!TL-SG2210MP
+#
+vlan 10
+        name "PC"
+#
+vlan 11
+        name "VOICE"
+#
+vlan 12
+        name "WIFI-DATA"
+#
+vlan 13
+        name "WIFI-GUEST"
+#
+vlan 15
+        name "PRINT"
+#
+vlan 99
+        name "MGMT"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+hostname "sw.hostname"
+#
+#
+system-time ntp UTC+03:00 172.16.130.129 172.16.128.1 12
+no system-time dst
+#
+#
+#
+radius-server host 10.64.240.17 auth-port 1812 acct-port 1813 timeout 5 retransmit 2 nas-id "005F670B1F2D" key 7 422b564066bf1cfa1c14bee2e7fa7704
+radius-server host 10.99.13.18 auth-port 1812 acct-port 1813 timeout 5 retransmit 2 nas-id "005F670B1F2D" key 7 422b564066bf1cfa1c14bee2e7fa7704
+aaa group radius NPS
+  server 10.64.240.17
+  server 10.99.13.18
+#
+aaa authentication login default radius local
+user name admin privilege admin secret 5 $1$L=E3B8N3J6M<E2H2H8O=O7K0M;C<A=O:|(.(,
+service password-encryption
+no service reset-disable
+#
+#
+#
+#
+#
+#
+#
+ip ssh server
+no ip ssh version v1
+#
+#
+snmp-server
+snmp-server group "GSP" smode v3 slev noAuthNoPriv read "viewDefault"
+snmp-server group "GSP" smode v3 slev authPriv read "viewDefault" write "viewDefault" notify "viewDefault"
+snmp-server community "public" read-only "viewDefault"
+snmp-server community "private" read-write "viewDefault"
+#
+snmp-server host 10.64.230.110 162 "private" smode v2c slev noAuthNoPriv type trap
+snmp-server traps spanning-tree topologychange
+snmp-server traps storm-control
+snmp-server traps loopback-detection
+#
+no ip http server
+#
+ip route 0.0.0.0 0.0.0.0 172.25.1.17
+
+#
+#
+power inline consumption 150.0
+#
+#
+
+#
+#
+loopback-detection
+#
+#
+#
+#
+#
+#
+#
+no controller cloud-based
+interface vlan 1
+  shutdown
+  no ip address
+  ipv6 enable
+#
+interface vlan 99
+  ip address 172.25.1.18 255.255.255.252
+  no ipv6 enable
+#
+interface gigabitEthernet 1/0/1
+  description "PC/VOIP"
+  shutdown
+  switchport general allowed vlan 10 untagged
+  switchport general allowed vlan 11 tagged
+  switchport pvid 10
+  no switchport general allowed vlan 1
+  qos queue 1 mode wrr weight 2
+  qos queue 2 mode wrr weight 4
+  qos queue 3 mode wrr weight 8
+  qos queue 4 mode wrr weight 16
+  qos queue 5 mode wrr weight 32
+  qos queue 6 mode sp
+  qos queue 7 mode sp
+  storm-control broadcast 64
+  storm-control multicast 64
+
+  loopback-detection config process-mode port-based recovery-mode auto
+  loopback-detection
+#
+interface gigabitEthernet 1/0/2
+  description "PC/VOIP"
+  shutdown
+  switchport general allowed vlan 10 untagged
+  switchport general allowed vlan 11 tagged
+  switchport pvid 10
+  no switchport general allowed vlan 1
+  qos queue 1 mode wrr weight 2
+  qos queue 2 mode wrr weight 4
+  qos queue 3 mode wrr weight 8
+  qos queue 4 mode wrr weight 16
+  qos queue 5 mode wrr weight 32
+  qos queue 6 mode sp
+  qos queue 7 mode sp
+  storm-control broadcast 64
+  storm-control multicast 64
+
+  loopback-detection config process-mode port-based recovery-mode auto
+  loopback-detection
+#
+interface gigabitEthernet 1/0/3
+  description "PC/VOIP"
+  shutdown
+  switchport general allowed vlan 10 untagged
+  switchport general allowed vlan 11 tagged
+  switchport pvid 10
+  no switchport general allowed vlan 1
+  qos queue 1 mode wrr weight 2
+  qos queue 2 mode wrr weight 4
+  qos queue 3 mode wrr weight 8
+  qos queue 4 mode wrr weight 16
+  qos queue 5 mode wrr weight 32
+  qos queue 6 mode sp
+  qos queue 7 mode sp
+  storm-control broadcast 64
+  storm-control multicast 64
+
+  loopback-detection config process-mode port-based recovery-mode auto
+  loopback-detection
+#
+interface gigabitEthernet 1/0/4
+  description "PC/VOIP"
+  shutdown
+  switchport general allowed vlan 10 untagged
+  switchport general allowed vlan 11 tagged
+  switchport pvid 10
+  no switchport general allowed vlan 1
+  qos queue 1 mode wrr weight 2
+  qos queue 2 mode wrr weight 4
+  qos queue 3 mode wrr weight 8
+  qos queue 4 mode wrr weight 16
+  qos queue 5 mode wrr weight 32
+  qos queue 6 mode sp
+  qos queue 7 mode sp
+  storm-control broadcast 64
+  storm-control multicast 64
+
+  loopback-detection config process-mode port-based recovery-mode auto
+  loopback-detection
+#
+interface gigabitEthernet 1/0/5
+  description "PC/VOIP"
+  shutdown
+  switchport general allowed vlan 10 untagged
+  switchport general allowed vlan 11 tagged
+  switchport pvid 10
+  no switchport general allowed vlan 1
+  qos queue 1 mode wrr weight 2
+  qos queue 2 mode wrr weight 4
+  qos queue 3 mode wrr weight 8
+  qos queue 4 mode wrr weight 16
+  qos queue 5 mode wrr weight 32
+  qos queue 6 mode sp
+  qos queue 7 mode sp
+  storm-control broadcast 64
+  storm-control multicast 64
+
+  loopback-detection config process-mode port-based recovery-mode auto
+  loopback-detection
+#
+interface gigabitEthernet 1/0/6
+  description "PC/VOIP"
+  shutdown
+  switchport general allowed vlan 10 untagged
+  switchport general allowed vlan 11 tagged
+  switchport pvid 10
+  no switchport general allowed vlan 1
+  qos queue 1 mode wrr weight 2
+  qos queue 2 mode wrr weight 4
+  qos queue 3 mode wrr weight 8
+  qos queue 4 mode wrr weight 16
+  qos queue 5 mode wrr weight 32
+  qos queue 6 mode sp
+  qos queue 7 mode sp
+  storm-control broadcast 64
+  storm-control multicast 64
+
+  loopback-detection config process-mode port-based recovery-mode auto
+  loopback-detection
+#
+interface gigabitEthernet 1/0/7
+  description "PC/VOIP"
+  shutdown
+  switchport general allowed vlan 10 untagged
+  switchport general allowed vlan 11 tagged
+  switchport pvid 10
+  no switchport general allowed vlan 1
+  qos queue 1 mode wrr weight 2
+  qos queue 2 mode wrr weight 4
+  qos queue 3 mode wrr weight 8
+  qos queue 4 mode wrr weight 16
+  qos queue 5 mode wrr weight 32
+  qos queue 6 mode sp
+  qos queue 7 mode sp
+  storm-control broadcast 64
+  storm-control multicast 64
+
+  loopback-detection config process-mode port-based recovery-mode auto
+  loopback-detection
+#
+interface gigabitEthernet 1/0/8
+  description "UPLINK_"
+  switchport general allowed vlan 10-13,15,99 tagged
+  switchport general allowed vlan all
+
+#
+interface gigabitEthernet 1/0/9
+
+#
+interface gigabitEthernet 1/0/10
+
+  lldp med-status
+#
+end
+
