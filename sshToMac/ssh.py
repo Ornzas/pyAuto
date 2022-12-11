@@ -5,6 +5,27 @@ import json
 import re
 from sys import argv
 
+def isTrunk(portType):
+    """Описание функции isTrunk()
+    Функция возвращает True если тип порта транк"""
+    if portType == "trunk":
+        return True
+    return False
+
+def isNotTrunk(portType):
+    """Описание функции isNotTrunk()
+    Функция возвращает True если тип порта не транк"""
+    if portType != "trunk":
+        return True
+    return False
+    
+def isConnected(portState):
+    """Описание функции isConnected()
+    Функция возвращает True порт подключен"""
+    if portState == "connected":
+        return True
+    return False
+
 max_bytes=60000
 switchIP = argv[1]
 
@@ -30,16 +51,26 @@ command = commandRAW.decode("utf-8").split("\r\n")
 ports = {}
 for line in command:
     if line != '' and line != 'sh interfaces status' and line.find("Port") < 0 and line[42:53].replace(" ","") != "":
-        # print(line[0:9].replace(" ","") + " --" + line[10:29] + " -+ " + line[29:42].replace(" ","") + " ++ " + line[42:53].replace(" ",""))
+        """
+        line[0:9].replace(" ","") - интерфейс/порт
+        line[10:29] - discription, как подписан порт
+        line[29:42].replace(" ","") - состояние
+        line[42:53].replace(" ","")) - тип порта или нативный влан.
+        """
         port = {"type":line[42:53].replace(" ",""),"state":line[29:42].replace(" ",""),"name":line[10:29]}
         ports[line[0:9].replace(" ","")] = port 
 
-for port in ports:
-    if ports[port]["state"] == "connected" and ports[port]["type"] != "trunk":
-        ssh.send("show mac address-table interface {}\n".format(port))
-        time.sleep(0.5)
-        for lineCommandShMacAddressTable in ssh.recv(max_bytes).decode("utf-8").split("\r\n"):
-            if re.findall(r"^Total Mac Addresses for this criterion",lineCommandShMacAddressTable) and int(lineCommandShMacAddressTable.split(":")[1].replace(" ","")) > 1:
-                print("Port {} has {} MAC\'s".format(port, lineCommandShMacAddressTable.split(":")[1].replace(" ","")))
+# input("!")
 
+for port in ports:
+    """Выбираем только подключенные и не транковые порты"""
+    if isConnected(ports[port]["state"]) and isNotTrunk(ports[port]["type"]):
+        ssh.send("show mac address-table interface {}\n".format(port))
+        # print("+\n")
+        time.sleep(0.5)
+        for resultCommandShMacAddressTable in ssh.recv(max_bytes).decode("utf-8").split("\r\n"):
+            if re.findall(r"^Total Mac Addresses for this criterion",resultCommandShMacAddressTable) and int(resultCommandShMacAddressTable.split(":")[1].replace(" ","")) > 1:
+                print("Port {} has {} MAC\'s".format(port, resultCommandShMacAddressTable.split(":")[1].replace(" ","")))
+
+"""Ждем ввод пользователя, с сообщением об удачном завершении скрипта, актуально для винды тк она торопится закрыть окно со скриптом"""
 input('Success')
