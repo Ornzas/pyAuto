@@ -1,5 +1,9 @@
 from switch import *
 from sys import argv
+import logging
+import threading
+import time
+# CDPNeighbors\main.py 172.16.153.1  -f CDPdata\Nekrasovo14 -t
 """show cdp neighbors detail
 -------------------------
 Device ID: c9200-sw7.gsprom.local
@@ -361,30 +365,197 @@ Management address(es):
 Total cdp entries displayed : 17
 c3850-core-gsp-serv#
 """
-# input("1!!")
-switchIP = argv[1]
-# input("2!!")
-# getLoginsFrom(fileWithLogins)
-ssh = connectTo(switchIP)
 
-# input("3!!")
-commandWithoutData("terminal length 0", ssh)
-# input("4!!")
-for neighbor in commandWithData("show cdp neighbors detail", ssh).split("-------------------------"):
-    oneSwitch = False
-    # remoteSwitch = ""
-    # print(remoteSwitch)
-    # interface = list()
-    # print(neighbor)
-    #if not re.findall(r"show cdp neighbors detail",neighbor):
-    for line in neighbor.split("\r\n"):
-        if re.findall(r"IP address:",line) and not oneSwitch:
-            remoteSwitch = line.split(":")[1].replace(" ","")
-            oneSwitch = True
-        if re.findall(r"Interface:",line) and re.findall(r"Port ID", line):
-            interface = [line.split(",")[0].split(":")[1].replace(" ","") , line.split(",")[1].split(":")[1].replace(" ","")]
-    if oneSwitch:        
-        print(interface[0] + " to " + interface[1] + " sw " + remoteSwitch)
-    #print(interface[0])
+def thread_function(name):
+    print("Thread %s: starting", name)
+    time.sleep(2)
+    print("Thread %s: finishing", name)
 
-input('Success!')
+'''
+def getCDPInfornationFrom(ip):
+    #i = 1
+    print('Work wiht ip {}'.format(ip))
+    ssh = connectTo(ip)
+    commandWithoutData("terminal length 0", ssh)
+    for neighbor in commandWithData("show cdp neighbors detail", ssh).split("-------------------------"):
+        oneSwitch = False
+        outputString = ""
+        #print('debug1')
+        for line in neighbor.split("\r\n"):
+            if re.findall(r"IP address:",line) and not oneSwitch:
+                #print('!')
+                remoteSwitch = line.split(":")[1].replace(" ","")
+                oneSwitch = True
+            if re.findall(r"Platform:", line):
+                platform = line.split(",")[0].split(":")[1].strip()
+            if re.findall(r"Interface:",line) and re.findall(r"Port ID", line):
+                interface = [line.split(",")[0].split(":")[1].replace(" ","") , line.split(",")[1].split(":")[1].replace(" ","")]
+
+            if re.findall(r"Device ID:",line):
+                deviceId = line.split(",")[0].split(":")[1].replace(" ","")
+
+        if oneSwitch:
+            #print('debugsw')
+            if ansibleFormat:
+                print(deviceId + ":\r\nansible_host: " + remoteSwitch)
+            else:
+                #print(ip + " " + outputString)
+                if interface[0] not in switches[ip]['interfaces']:
+                    switches[ip]['interfaces'][interface[0]] = {}
+                switches[ip]['interfaces'][interface[0]][remoteSwitch] = interface[1]
+                #print("====" + interface[0])
+                #rint(switches[ip]['interfaces'][interface[0]])
+                #[interface[0]][remoteSwitch] = interface[1]
+                #print(switches[ip])
+                #print(interface[0] + " to " + interface[1] + " sw " + deviceId)
+                #print(remoteSwitch + ", " + platform)
+            if buildTree:
+                if remoteSwitch in switches:
+                    print("Switches have {} switch".format(remoteSwitch))
+                else:
+                    if platform not in excluded:
+                        switches[remoteSwitch] = {}
+                        switches[remoteSwitch]['interfaces'] = {}
+                        switches[remoteSwitch]['platform'] = platform
+                        switches[remoteSwitch]['hostname'] = deviceId
+                        print("Connect to {}, {}".format(remoteSwitch, platform))
+                        #i+=1
+                        x = threading.Thread(target=getCDPInfornationFrom, args=(remoteSwitch,))
+                        x.start()
+                        x.join()
+'''
+
+def getCDPInfornationFrom(ip):
+    #i = 1
+    print('Work with ip {}'.format(ip))
+    interfaces = {}
+    ssh = connectTo(ip)
+    if (ssh):
+        commandWithoutData("terminal length 0", ssh)
+    #    hostname = commandWithData("terminal length 0", ssh).split("\r\n")[2].split("#")[0]
+    #    domain = commandWithData("sh ip domain", ssh).split("\r\n")[1]
+    #    fullHostname = hostname + "." + domain
+    #    if fullHostname not in switches:
+    #        switches[fullHostname] = {}
+    #        switches[fullHostname]['interfaces'] = {}
+
+        for neighbor in commandWithData("show cdp neighbors detail", ssh).split("-------------------------"):
+            oneSwitch = False
+            outputString = ""
+            for line in neighbor.split("\r\n"):
+                if re.findall(r"IP address:",line) and not oneSwitch:
+                    remoteSwitch = line.split(":")[1].replace(" ","")
+                    oneSwitch = True
+                if re.findall(r"Platform:", line):
+                    platform = line.split(",")[0].split(":")[1].strip()
+                if re.findall(r"Interface:",line) :
+                    if re.findall(r"Port ID", line):
+                        interface = [line.split(",")[0].split(":")[1].replace(" ","") , line.split(",")[1].split(":")[1].replace(" ","")]
+                    else:
+                        interface = [line.split(",")[0].split(":")[1].replace(" ","") , ""]
+                    
+
+                if re.findall(r"Device ID:",line):
+                    deviceId = line.split(",")[0].split(":")[1].replace(" ","")
+
+            if oneSwitch:
+                if ansibleFormat:
+                    print(deviceId + ":\r\nansible_host: " + remoteSwitch)
+                else:
+                    if interface[0] not in interfaces:
+                        interfaces[interface[0]] = {}
+                    interfaces[interface[0]][deviceId] = interface[1]
+                if buildTree:
+                    if deviceId in switches:
+                        print("Switches have {} switch".format(deviceId))
+                    else:
+                        if platform not in excluded:
+                            switches[deviceId] = {}
+                            switches[deviceId]['interfaces'] = {}
+                            switches[deviceId]['platform'] = platform
+                            switches[deviceId]['ip'] = remoteSwitch
+                            print("Connect to {}, '{}'".format(switches[deviceId]['ip'], platform))
+                            #i+=1
+                            switches[deviceId]['interfaces'] = getCDPInfornationFrom(remoteSwitch)
+                            #x = threading.Thread(target=getCDPInfornationFrom, args=(switches[deviceId]['ip'],))
+                            #x.start()
+                            #x.join()
+    return interfaces
+
+    
+    
+    
+if __name__ == "__main__":
+
+    excluded = ['Cisco IP Phone 8841',
+                'Cisco IP Phone 8851',
+                'Cisco IP Phone 7821',
+                'Cisco IP Phone 8861',
+                'Cisco IP Phone 8865',
+                'Cisco IP Phone 7911',
+                'Cisco IP Phone 7841',
+                'Cisco IP Phone 7941',
+                'Cisco IP Phone 7960',
+                'Cisco IP Phone 8845',
+                'Cisco IP Phone 6921',
+                'Cisco IP Phone 7962',
+                'Cisco IP Phone 8832',
+                'Cisco IP Phone 7942',
+                'Cisco IP Phone 6945',
+                'CTS-CODEC-inTouch',
+                'CTS-CODEC-SX20',
+                'Codec Plus',
+                'NanoBeam 5AC Gen2',
+                'NanoBeam 5AC Gen2',
+                'airFiber 5U',
+                'cisco AIR-AP1815I-R-K9',
+                'NanoStation loco M5',
+                'NanoStation M2',
+                'NanoStation M5',
+                'Rocket M2',
+                'Cisco IP Phone 3905',
+                'CISCO ATA SPA112',
+                'Rocket M5',
+                'NanoStation loco M2',
+                'MikroTik',
+                'cisco AIR-CAP3702I-R-K9',
+                'PowerBeam M5 400',
+                'Rocket Prism 5AC Gen2',
+                'Cisco SG200-18 (PID',
+                'NS2',
+                'Bullet M5',
+                'AIR-CT5508-K9',
+                'CTS-CODEC-SX80',
+                'Cisco IP Phone 9971',
+                'Cisco IP Phone 8831',
+                'cisco AIR-AP2802I-R-K9']
+                
+    switches = {}
+    showDeviceId = buildTree = ansibleFormat = False
+    #ansibleFormat = False
+    threads = list()
+    par = 0
+    outFile = ""
+    for parameter in argv:
+        # print("!!")
+        par += 1
+        if parameter == "-i":
+            # print("EEe")
+            showDeviceId = True
+#        if parameter == "-f":
+#            ansibleFormat = True
+        if parameter == "-t":
+            buildTree = True
+        if parameter == "-f":
+            outFile = argv[ par ]
+            
+
+    switchIP = argv[1]
+    Full = getCDPInfornationFrom(switchIP)
+    if outFile:
+        file = open(outFile + '.json', 'w')
+        file.write(json.dumps(switches))
+        file.close()
+    else:
+        print(switches)
+    input('Success!')

@@ -3,6 +3,7 @@ import time
 import socket
 import json
 import re
+import logging
 
 max_bytes=60000
 fileWithLogins = 'C:\\Users\\kasatkindi\\Desktop\\Bascket\\pyAuto\\logpass.pwd'
@@ -43,19 +44,22 @@ def getLoginsFrom(file):
 
 def commandWithoutData(command, ssh):
     ssh.send(command + "\n")
-    time.sleep(0.5)
+    time.sleep(1.5)
     ssh.recv(max_bytes)
     return True
 
 def commandWithData(command, ssh):
     ssh.send(command + "\n")
-    time.sleep(0.5)
+    time.sleep(1.5)
+    #print('do commandWithData')
+    #print(ssh.recv(max_bytes).decode("utf-8"))
     return ssh.recv(max_bytes).decode("utf-8")
 
 def connectTo(switchIP):
     client = paramiko.SSHClient()
     client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
     # for login in logins:
+    succeedConnection = False
     for login in getLoginsFrom(fileWithLogins):
         username = login["login"]
         password = login["password"]
@@ -67,16 +71,36 @@ def connectTo(switchIP):
                 look_for_keys = False,
                 allow_agent = False,
             )
+            succeedConnection = True
             break
         except TimeoutError:
-            input("Device is not recheable!")
-            exit()
+            print("Device is not recheable!")
+            return False
+            #exit()
         except paramiko.ssh_exception.AuthenticationException:
             print("Authentication failed user {}!".format(username))
             next
-
-    print("Authentication succeed user {}!".format(username))
-    return client.invoke_shell()
+        except paramiko.ssh_exception.NoValidConnectionsError:
+            print("Unable to connect to port 22 on {}!".format(switchIP))
+            next
+        except AttributeError:
+            print("'NoneType' object has no attribute 'open_session'")
+            next
+        except paramiko.ssh_exception.SSHException:
+            print("Error reading SSH protocol banner")
+            next
+    if succeedConnection:
+        print("Authentication succeed user {}!".format(username))
+        try:
+            return client.invoke_shell()
+        except AttributeError:
+            #exit()
+            next
+    else:
+        print('Failed to connect to {}!'.format(switchIP))
+        #exit()
+        return False
+    return True
 
 if __name__ == '__main__':
     input("Use only in another scripts")
