@@ -3,29 +3,7 @@ from sys import argv
 import logging
 import threading
 import time
-# CDPNeighbors\main.py 172.16.153.1  -f CDPdata\Nekrasovo14 -t
-"""
--------------------------
-Device ID: c2960_sw2.gsprom.local
-Entry address(es):
-  IP address: 172.16.215.196
-Platform: cisco WS-C2960X-48FPS-L,  Capabilities: Switch IGMP
-Interface: GigabitEthernet1/0/19,  Port ID (outgoing port): GigabitEthernet1/0/47
-Holdtime : 152 sec
-
-Version :
-Cisco IOS Software, C2960X Software (C2960X-UNIVERSALK9-M), Version 15.2(4)E8, RELEASE SOFTWARE (fc3)
-Technical Support: http://www.cisco.com/techsupport
-Copyright (c) 1986-2019 by Cisco Systems, Inc.
-Compiled Fri 15-Mar-19 10:55 by prod_rel_team
-
-advertisement version: 2
-VTP Management Domain: ''
-Native VLAN: 1
-Duplex: full
-Management address(es):
-  IP address: 172.16.215.196
-"""
+# CDPNeighbors\main.py __ip__  -f CDPdata\__name_of_office__ -t
 
 def getCDPInfornationFrom(ip, externalDeviceId):
     print('Work with ip {}'.format(ip))
