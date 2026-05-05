@@ -10,7 +10,7 @@
     "name": "sensor1.example.com",
     "community": "public",
     "oid": ".1.3.6.1.4.1.40418.2.6.1.2.0",
-    "label": "PowerSensor",
+    "label": "SNR-ERD",
     "scale": 100
   }
 ]
