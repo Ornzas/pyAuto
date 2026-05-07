@@ -1,2 +1,4 @@
 *.pwd
 CDPData/
+__pycache__/
+*.pyc
